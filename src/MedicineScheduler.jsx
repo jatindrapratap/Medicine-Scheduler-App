@@ -23,6 +23,7 @@ function MedicineScheduler() {
     return (
         <div>
             <h1>Eye Medicine Scheduler</h1>
+            <p>HINT: Select both date and time to see what medicines need to be taken</p>
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <input type="date" value={date} onChange={handleDateChange} />
                 <select value={selectedTime} onChange={handleTimeChange}>
