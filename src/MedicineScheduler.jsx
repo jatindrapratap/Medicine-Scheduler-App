@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getMedicineForDate } from "./medicineSchedule";
 
 function MedicineScheduler() {
-    const [date, setDate] = useState("");
+    const today = new Date().toISOString().split("T")[0];
+    const [date, setDate] = useState(today);
     const [selectedTime, setSelectedTime] = useState("7am");
     const [medicineSchedule, setMedicineSchedule] = useState({
         rightEye: {},
         leftEye: {},
     });
 
+    useEffect(() => {
+        setMedicineSchedule(getMedicineForDate(date));
+    }, [date]);
+
     const handleDateChange = (e) => {
         setDate(e.target.value);
-        setMedicineSchedule(getMedicineForDate(e.target.value));
     };
 
     const handleTimeChange = (e) => {
