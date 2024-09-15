@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getMedicineForDate } from "./medicineSchedule";
+import "./MedicineScheduler.css"; // Import the CSS file
 
 function MedicineScheduler() {
     const today = new Date().toISOString().split("T")[0];
@@ -28,7 +29,7 @@ function MedicineScheduler() {
         <div>
             <h1>Eye Medicine Scheduler</h1>
             <p>HINT: Select both date and time to see what medicines need to be taken</p>
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div className="date-time">
                 <input type="date" value={date} onChange={handleDateChange} />
                 <select value={selectedTime} onChange={handleTimeChange}>
                     {timeOptions.map((time) => (
