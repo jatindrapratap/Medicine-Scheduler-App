@@ -10,9 +10,16 @@ function MedicineScheduler() {
         rightEye: {},
         leftEye: {},
     });
+    const [timeTaken, setTimeTaken] = useState({});
 
     useEffect(() => {
         setMedicineSchedule(getMedicineForDate(date));
+    }, [date]);
+
+    useEffect(() => {
+        // Load the checkbox state from localStorage when the component mounts
+        const storedTimeTaken = JSON.parse(localStorage.getItem(date)) || {};
+        setTimeTaken(storedTimeTaken);
     }, [date]);
 
     const handleDateChange = (e) => {
@@ -21,6 +28,17 @@ function MedicineScheduler() {
 
     const handleTimeChange = (e) => {
         setSelectedTime(e.target.value);
+    };
+
+    const handleCheckboxChange = (time) => {
+        const updatedTimeTaken = {
+            ...timeTaken,
+            [time]: !timeTaken[time],
+        };
+        setTimeTaken(updatedTimeTaken);
+
+        // Save the updated checkbox state in localStorage
+        localStorage.setItem(date, JSON.stringify(updatedTimeTaken));
     };
 
     const timeOptions = ["7am", "9am", "11am", "1pm", "3pm", "5pm", "7pm", "9pm"];
@@ -33,10 +51,25 @@ function MedicineScheduler() {
                 <input type="date" value={date} onChange={handleDateChange} />
                 <select value={selectedTime} onChange={handleTimeChange}>
                     {timeOptions.map((time) => (
-                        <option key={time} value={time}>{time}</option>
+                        <option key={time} value={time}>
+                            {time}
+                        </option>
                     ))}
                 </select>
             </div>
+            
+                    {/* Checkbox for marking the medicines as consumed at the selected time */}
+                    <div className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            id={`time-checkbox-${selectedTime}`}
+                            checked={timeTaken[selectedTime] || false}
+                            onChange={() => handleCheckboxChange(selectedTime)}
+                        />
+                        <label htmlFor={`time-checkbox-${selectedTime}`}>
+                            Mark medicines for {selectedTime} as consumed
+                        </label>
+                    </div>
             <div>
                 <h2>Medicine Schedule for {date} at {selectedTime}:</h2>
                 <div>
@@ -65,6 +98,7 @@ function MedicineScheduler() {
                             )}
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>
