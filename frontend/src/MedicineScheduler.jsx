@@ -57,20 +57,20 @@ function MedicineScheduler() {
                     ))}
                 </select>
             </div>
-            
-                    {/* Checkbox for marking the medicines as consumed at the selected time */}
-                    <div className="checkbox-container">
-                        <input
-                            type="checkbox"
-                            id={`time-checkbox-${selectedTime}`}
-                            checked={timeTaken[selectedTime] || false}
-                            onChange={() => handleCheckboxChange(selectedTime)}
-                        />
-                        <label htmlFor={`time-checkbox-${selectedTime}`}>
-                            Mark medicines for {selectedTime} as consumed
-                        </label>
-                    </div>
-            <div>
+
+            {/* Checkbox for marking the medicines as consumed at the selected time */}
+            <div className="checkbox-container">
+                <input
+                    type="checkbox"
+                    id={`time-checkbox-${selectedTime}`}
+                    checked={timeTaken[selectedTime] || false}
+                    onChange={() => handleCheckboxChange(selectedTime)}
+                />
+                <label htmlFor={`time-checkbox-${selectedTime}`}>
+                    Mark medicines for {selectedTime} as consumed
+                </label>
+            </div>
+            <div className="medicine-schedule">
                 <h2>Medicine Schedule for {date} at {selectedTime}:</h2>
                 <div>
                     <div>
